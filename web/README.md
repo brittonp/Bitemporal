@@ -1,5 +1,5 @@
 # Project Title: bitemporal
-A simple web app using Modern JavaScript (ES6+) with unit tests.
+Bitemporal Web App.
 
 ## Overview
 This app dynamically adds a series of divs to the html index page using a class. The class functions have unit tests (using vitest) defined for each of the class methods. The unit tests are run using the bash command:
