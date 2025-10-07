@@ -3,18 +3,18 @@ name: Azure Static Web Apps CI/CD
 on:
   push:
     branches:
-      - main
+      - master
     paths:                # <-- Add this section
       - 'web/**'
-      - '.github/workflows/web-deploy.yaml'  # optional, to rerun workflow if workflow file changes
+      - '.github/workflows/web-deploy.yml'  # optional, to rerun workflow if workflow file changes
 
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
-      - main
+      - master
     paths:
       - 'web/**'
-      - '.github/workflows/web-deploy.yaml' 
+      - '.github/workflows/web-deploy.yml' 
 
 jobs:
   build_and_deploy_job:
