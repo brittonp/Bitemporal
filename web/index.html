@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bi-temporal app</title>
+  <script type="module" src="./main.mjs"></script>
+</head>
+
+<body>
+  <header class="header">
+    <div>Bitemporal App</div>
+  </header>
+
+  <main class="body-panel">
+    <div class="grid-vertical">
+      <div class="panel">
+        <div class="grid-horizontal">
+          <div class="panel">
+            <canvas id="panelDeptPlot"></canvas>
+          </div>
+          <div class="divider divider-vertical"></div>
+          <div class="panel">
+            <canvas id="panelEmpPlot"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="divider divider-horizontal"></div>
+      <div class="panel" id="panel2"></div>
+      <div class="divider divider-horizontal"></div>
+      <div class="panel" id="panel3"></div>
+      <div class="divider divider-horizontal"></div>      
+      <div class="panel" id="panel4"></div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="left-buttons">
+      <button id="resetButton">Reset</button>
+    </div>
+    <div class="centre-buttons">
+    </div>         
+    <div class="right-buttons">
+      <button id="refreshButton">Refresh</button>
+    </div>      
+  </footer>
+</body>
+
+</html>
