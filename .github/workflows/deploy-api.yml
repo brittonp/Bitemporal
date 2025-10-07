@@ -33,9 +33,11 @@ jobs:
           dotnet-version: '9.x'
 
       - name: Build with dotnet
+        working-directory: api
         run: dotnet build --configuration Release
 
       - name: dotnet publish
+        working-directory: api
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp" /p:DeleteExistingFiles=true
 
       - name: Upload artifact for deployment job
