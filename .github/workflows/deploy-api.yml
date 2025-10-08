@@ -22,7 +22,7 @@ jobs:
   build:
     runs-on: windows-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read 
 
     steps:
       - uses: actions/checkout@v4
@@ -31,20 +31,6 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.x'
-
-      # - name: Build with dotnet
-      #   working-directory: api
-      #   run: dotnet build --configuration Release
-
-      # - name: dotnet publish
-      #   working-directory: api
-      #   run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp" /p:DeleteExistingFiles=true
-
-      # - name: Upload artifact for deployment job
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: api-artifact
-      #     path: ${{env.DOTNET_ROOT}}/myapp
 
       - name: Build API project only
         run: dotnet build ./api/Bitemporal-api.csproj --configuration Release
@@ -62,15 +48,15 @@ jobs:
     runs-on: windows-latest
     needs: build
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      id-token: write 
+      contents: read 
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: api-artifact
-          path: myapp
+          path: dist
       
       - name: Login to Azure
         uses: azure/login@v2
@@ -83,5 +69,5 @@ jobs:
         with:
           app-name: 'bitemporal-api'
           slot-name: 'Production'
-          package: myapp
+          package: dist
           
