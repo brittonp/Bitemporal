@@ -32,19 +32,31 @@ jobs:
         with:
           dotnet-version: '9.x'
 
-      - name: Build with dotnet
-        working-directory: api
-        run: dotnet build --configuration Release
+      # - name: Build with dotnet
+      #   working-directory: api
+      #   run: dotnet build --configuration Release
 
-      - name: dotnet publish
-        working-directory: api
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp" /p:DeleteExistingFiles=true
+      # - name: dotnet publish
+      #   working-directory: api
+      #   run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp" /p:DeleteExistingFiles=true
 
-      - name: Upload artifact for deployment job
+      # - name: Upload artifact for deployment job
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: .net-app
+      #     path: ${{env.DOTNET_ROOT}}/myapp
+
+      - name: Build API project only
+        run: dotnet build ./api/Bitemporal-api.csproj --configuration Release
+
+      - name: Publish API project
+        run: dotnet publish ./api/Bitemporal-api.csproj -c Release -r win-x86 --self-contained false -o publish /p:DeleteExistingFiles=true
+
+      - name: Upload artifact for deployment
         uses: actions/upload-artifact@v4
         with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          name: api-artifact
+          path: publish
 
   deploy:
     runs-on: windows-latest
