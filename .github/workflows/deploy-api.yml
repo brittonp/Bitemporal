@@ -56,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: api-artifact
-          path: myapp
+          path: publish
 
   deploy:
     runs-on: windows-latest
