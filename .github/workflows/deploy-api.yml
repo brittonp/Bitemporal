@@ -43,7 +43,7 @@ jobs:
       # - name: Upload artifact for deployment job
       #   uses: actions/upload-artifact@v4
       #   with:
-      #     name: .net-app
+      #     name: api-artifact
       #     path: ${{env.DOTNET_ROOT}}/myapp
 
       - name: Build API project only
@@ -56,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: api-artifact
-          path: publish
+          path: myapp
 
   deploy:
     runs-on: windows-latest
@@ -69,7 +69,8 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: .net-app
+          name: api-artifact
+          path: myapp
       
       - name: Login to Azure
         uses: azure/login@v2
@@ -82,5 +83,5 @@ jobs:
         with:
           app-name: 'bitemporal-api'
           slot-name: 'Production'
-          package: .
+          package: myapp
           
