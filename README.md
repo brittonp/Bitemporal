@@ -106,6 +106,22 @@ This dual-timeline approach enables:
 
 ---
 
+## 🧱 Project Structure
+
+```
+bitemporal-app/
+│
+├── api/                         # .NET 9 Minimal API backend
+│
+├── web/                         # ECMS JavaScript frontend
+│
+├── sql/                         # Database scripts (schema & seed data)
+│
+└── .github/workflows/           # CI/CD (Azure deployment)
+```
+
+---
+
 ## ⚙️ Getting Started
 
 ### Prerequisites
@@ -122,21 +138,23 @@ git clone https://github.com/brittonp/Bitemporal
 cd bitemporal
 ```
 
-### 2. Configure the backend
+### 2. Configure the SqlServer database
 
-Edit `appsettings.json`:
+* Create a new SqlServer database named `BitemporalDB`, (assuming local instance)
+* Run the script `.\sql\create.sql` to create schema and seed data, (other files are for reference)
+* Edit `.\api\appsettings.json`:
 
 ```json
 "ConnectionStrings": {
-  "BitemporalDb": "Server=localhost;Database=BitemporalDB;Trusted_Connection=True;"
+  "BitemporalDb": "Server=localhost;Database=BitemporalDB;Trusted_Connection=True;Trust Server Certificate=True"
 }
 ```
 
-### 3. Run the backend
+### 3. Run the api
 
 ```bash
 cd api
-dotnet run --project Bitemporal-api.csproj --urls "http://localhost:5000"
+dotnet run --project Bitemporal-api.csproj --urls "https://localhost:5001"
 ```
 
 ### 4. Run the frontend
@@ -151,21 +169,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000)
 
----
-
-## 🧱 Project Structure
-
-```
-bitemporal-app/
-│
-├── api/                         # .NET 9 Minimal API backend
-│
-├── web/                         # ECMS JavaScript frontend
-│
-├── sql/                         # Database scripts (schema & seed data)
-│
-└── .github/workflows/           # CI/CD (Azure deployment)
-```
+Optionally, open the OpenAPI UI at [https://localhost:5001/swagger/v1](https://localhost:5001/swagger/v1)
 
 ---
 
