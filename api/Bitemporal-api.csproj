@@ -5,7 +5,6 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Bitemporal_api</RootNamespace>
-    <UserSecretsId>ae0fb033-0b40-45cb-a5ce-fe5e5c155067</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

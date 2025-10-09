@@ -3,7 +3,6 @@ using Bitemporal.Api;
 using Bitemporal.Data;
 using ISession = Bitemporal.Api.ISession;
 using IBitemporalData = Bitemporal.Api.IBitemporalData;
-using System.Diagnostics.CodeAnalysis;
 
 var builder = WebApplication.CreateBuilder(args);
 
