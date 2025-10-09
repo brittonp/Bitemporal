@@ -8,11 +8,12 @@ export default defineConfig(({ command }) => {
     root: '.', // project root
     server: isDev
       ? {
-          https: false,
+          https: false, // run on http in dev for simplicity
           port: 3000,
+          // proxy API requests to backend to avoid CORS issues
           proxy: {
             '/Bitemporal': {
-              target: 'http://localhost:5000',
+              target: 'https://localhost:5001',
               changeOrigin: true,
               secure: false,
             },

@@ -134,16 +134,9 @@ Edit `appsettings.json`:
 
 ### 3. Run the backend
 
-The backend uses HTTPS, so you may need to trust the local dev certificate:
-
 ```bash
-dotnet dev-certs https --trust
-```
-
-Run the API:
-
-```bash
-dotnet run --project api/Bitemporal-api.csproj --urls "https://localhost:7115"
+cd api
+dotnet run --project Bitemporal-api.csproj --urls "http://localhost:5000"
 ```
 
 ### 4. Run the frontend
@@ -151,7 +144,7 @@ dotnet run --project api/Bitemporal-api.csproj --urls "https://localhost:7115"
 ```bash
 cd web
 npm install
-npm start
+npm run dev
 ```
 
 ### 5. View the app

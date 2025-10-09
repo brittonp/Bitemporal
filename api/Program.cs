@@ -51,21 +51,21 @@ builder.Services.AddOpenApi(options =>
     });
 });
 
-// CORS enablement
-var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
+// CORS enablement - not an issue for DEV (plus we use a vite proxy), and for prod (Azure) the CORS is managed by Azure.
+//var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("CorsPolicy",
-        policy => policy
-            .WithOrigins(allowedOrigins)
-            .AllowAnyMethod()
-            .AllowAnyHeader());
-});
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("CorsPolicy",
+//        policy => policy
+//            .WithOrigins(allowedOrigins)
+//            .AllowAnyMethod()
+//            .AllowAnyHeader());
+//});
 
 var app = builder.Build();
 
-app.UseCors("CorsPolicy");
+//app.UseCors("CorsPolicy");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsStaging() || app.Environment.IsEnvironment("Test"))
