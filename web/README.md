@@ -1,5 +1,5 @@
 # Project Title: bitemporal
-Bitemporal Web App....
+Bitemporal Web App.....
 V1
 
 ## Overview
