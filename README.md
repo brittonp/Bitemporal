@@ -220,8 +220,8 @@ AS
 -- Join filtered tables
 -- ============================================================
 SELECT
-	@tran_date AS tran_date, 
-	@valid_date AS valid_date,
+	@TransactionTime AS tran_date, 
+	@ValidTime AS valid_date,
 	d.dept_hist_id,
 	d.dept_name,
 	e.emp_hist_id,
@@ -252,8 +252,8 @@ DECLARE @ValidTime DATETIME2 = '2024-06-01T00:00:00';
 DECLARE @TransactionTime DATETIME2 = '2024-07-01T00:00:00';
 
 SELECT
-	@tran_date AS tran_date, 
-	@valid_date AS valid_date,
+	@TransactionTime AS tran_date, 
+	@ValidTime AS valid_date,
 	d.dept_hist_id,
 	d.dept_name,
 	e.emp_hist_id,
@@ -264,9 +264,9 @@ SELECT
 	e.hire_date,
 	e.term_date
 FROM 
-	btd.fn_as_of_department(@valid_date, @tran_date) d
+	btd.fn_as_of_department(@ValidTime, @TransactionTime) d
 LEFT JOIN
-	btd.fn_as_of_employee(@valid_date, @tran_date) e
+	btd.fn_as_of_employee(@ValidTime, @TransactionTime) e
 ON 
 	e.dept_id = d.dept_id
 WHERE 
