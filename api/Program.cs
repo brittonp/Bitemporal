@@ -174,4 +174,3 @@ sessionGroup.MapGet("/PingDatabase", async (ISession session) =>
 
 
 app.Run();
-
