@@ -72,27 +72,27 @@ ORDER BY
 --FOR JSON AUTO
 FOR JSON PATH;
 
---SELECT
---	@tran_date AS tran_date, 
---	@valid_date AS valid_date,
---    d.dept_hist_id,
---    d.dept_name,
---    e.emp_hist_id,
---    e.emp_id,
---    e.first_name,
---    e.last_name,
---    e.job_title,
---    e.hire_date,
---    e.term_date
---FROM 
---	btd.fn_as_of_department(@valid_date, @tran_date) d
---LEFT JOIN
---	btd.fn_as_of_employee(@valid_date, @tran_date) e
---ON 
---	e.dept_id = d.dept_id
---WHERE 
---	d.dept_id = 10
---ORDER BY 
---	d.dept_hist_id,
---	e.emp_hist_id;
---GO
+SELECT
+	@tran_date AS tran_date, 
+	@valid_date AS valid_date,
+    d.dept_hist_id,
+    d.dept_name,
+    e.emp_hist_id,
+    e.emp_id,
+    e.first_name,
+    e.last_name,
+    e.job_title,
+    e.hire_date,
+    e.term_date
+FROM 
+	btd.fn_as_of_department(@valid_date, @tran_date) d
+LEFT JOIN
+	btd.fn_as_of_employee(@valid_date, @tran_date) e
+ON 
+	e.dept_id = d.dept_id
+WHERE 
+	d.dept_id = 10
+ORDER BY 
+	d.dept_hist_id,
+	e.emp_hist_id;
+GO

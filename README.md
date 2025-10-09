@@ -244,6 +244,38 @@ ORDER BY
 	e.emp_hist_id
 ;
 ```
+
+An alternative approach uses table-valued functions (these are defined in the `.\sql\create.sql` script):
+
+```sql
+DECLARE @ValidTime DATETIME2 = '2024-06-01T00:00:00';
+DECLARE @TransactionTime DATETIME2 = '2024-07-01T00:00:00';
+
+SELECT
+	@tran_date AS tran_date, 
+	@valid_date AS valid_date,
+	d.dept_hist_id,
+	d.dept_name,
+	e.emp_hist_id,
+	e.emp_id,
+	e.first_name,
+	e.last_name,
+	e.job_title,
+	e.hire_date,
+	e.term_date
+FROM 
+	btd.fn_as_of_department(@valid_date, @tran_date) d
+LEFT JOIN
+	btd.fn_as_of_employee(@valid_date, @tran_date) e
+ON 
+	e.dept_id = d.dept_id
+WHERE 
+	d.dept_id = 10
+ORDER BY 
+	d.dept_hist_id,
+	e.emp_hist_id
+;
+```
 ---
 
 ## ☁️ Deployment
@@ -263,5 +295,5 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 ## 👥 Authors / Contributors
 
-* **[Your Name]** — Developer & Maintainer
+* Paul Britton Developer & Maintainer
 * Contributions are welcome via issues and pull reque
