@@ -133,33 +133,31 @@ bitemporal-app/
 
 ### 1. Clone the repository
 
-```bash
+```powershell
 git clone https://github.com/brittonp/Bitemporal
 cd bitemporal
 ```
 
-### 2. Configure the SqlServer database
+### 2. Create the SqlServer database
 
-* Create a new SqlServer database named `BitemporalDB`, (assuming local instance)
-* Run the script `.\sql\create.sql` to create schema and seed data, (other files are for reference)
-* Edit `.\api\appsettings.json`:
+This app connects to a locally hosted SqlServer database. 
 
-```json
-"ConnectionStrings": {
-  "BitemporalDb": "Server=localhost;Database=BitemporalDB;Trusted_Connection=True;Trust Server Certificate=True"
-}
+```powershell
+cd sql
+sqlcmd -S localhost -E -Q "CREATE DATABASE BitemporalDB"
+sqlcmd -S localhost -E -i create.sql
 ```
 
 ### 3. Run the api
 
-```bash
+```powershell
 cd api
 dotnet run --project Bitemporal-api.csproj --urls "https://localhost:5001"
 ```
 
 ### 4. Run the frontend
 
-```bash
+```powershell
 cd web
 npm install
 npm run dev
