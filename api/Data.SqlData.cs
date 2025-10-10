@@ -44,6 +44,9 @@ namespace Bitemporal.Data
             var strBuilder = new StringBuilder();
             int i = 0;
 
+            // Emulate 10 second delay
+            //await Task.Delay(5 * 1000);
+
             try
             {
                 using (SqlConnection conn = new SqlConnection(_connectionString))

@@ -1,7 +1,6 @@
 using Scalar.AspNetCore;
 using Bitemporal.Api;
 using Bitemporal.Data;
-using ISession = Bitemporal.Api.ISession;
 using IBitemporalData = Bitemporal.Api.IBitemporalData;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +10,6 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
 
 builder.Services.AddTransient<ISqlData, SqlData>();
-builder.Services.AddTransient<ISession, Session>();
 builder.Services.AddTransient<IBitemporalData, BitemporalData>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -159,13 +157,9 @@ bitemporalGroup.MapGet("/GetCmds",  (
     .WithDescription("Get all SQL commands, (minimal api)");
 
 
-// Session api group...
-var sessionGroup = app.MapGroup("/GetUpdateCmds")
-    .WithTags("Session");
-
-sessionGroup.MapGet("/PingDatabase", async (ISession session) =>
+bitemporalGroup.MapGet("/PingDatabase", async (IBitemporalData bitemporaldata) =>
 {
-    var result = await session.PingDatabase();
+    var result = await bitemporaldata.PingDatabase();
     return Results.Ok(result);
 
 })

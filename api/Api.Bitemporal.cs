@@ -6,6 +6,7 @@ namespace Bitemporal.Api
 
     public interface IBitemporalData
     {
+        Task<object> PingDatabase();
         Task<object> GetDepartmentBitemporalData(int deptId);
         Task<object> GetEmployeeBitemporalData(int empId);
         Task<object> GetData(DateTime validDate, DateTime tranDate);
@@ -17,17 +18,24 @@ namespace Bitemporal.Api
         public class BitemporalData : IBitemporalData
     {
         private readonly IConfiguration _configuration;
-        private readonly ILogger<Session> _logger;
+        private readonly ILogger<BitemporalData> _logger;
         private readonly ISqlData _sqlData;
 
         public BitemporalData(
             IConfiguration configuration,
-            ILogger<Session> logger,
+            ILogger<BitemporalData> logger,
             ISqlData sqlData)
         {
             _configuration = configuration;
             _logger = logger;
             _sqlData = sqlData;
+        }
+
+        public async Task<object> PingDatabase()
+        {
+            // Ping database...
+            var json = await _sqlData.PingDatabase();
+            return json;
         }
 
         public async Task<object> GetDepartmentBitemporalData(int deptId)
