@@ -1,5 +1,6 @@
 ﻿// main.mjs
 import './style.css';
+import { Splash } from './Splash.mjs';
 import { GridResizable } from './GridResizeable.mjs';
 import { DataManager } from './DataManager.mjs';
 import { Config } from './Config.mjs';
@@ -10,14 +11,8 @@ import { DialogUpdate } from './DialogUpdate.mjs';
 
 //Wait for the page to load before initializing the app
 window.addEventListener('load', async (event) => {
-  // Make the grid resizable
-  const resizable = new GridResizable();
-  document
-    .querySelectorAll('.divider-vertical')
-    .forEach((div, i) => resizable.makeVerticalDivider(div, i * 2 + 1));
-  document
-    .querySelectorAll('.divider-horizontal')
-    .forEach((div, i) => resizable.makeHorizontalDivider(div, i * 2 + 1));
+  const splash = new Splash();
+  splash.showSplash('Loading Bitemporal App...');
 
   // Use Config class to load configuration
   const config = new Config();
@@ -28,14 +23,39 @@ window.addEventListener('load', async (event) => {
 
   // Intialise DataManager
   const dataManager = new DataManager(configData);
-  const cmds = await dataManager.getCmds();
+
+  try {
+    // ping database to ensure connection is working
+    await dataManager.pingDatabase();
+    // hide splash when ready
+    splash.hideSplash();
+
+    // bit ugly but need to ensure splash is removed before showing app
+    document.querySelector('app').classList.remove('hidden');
+  } catch (err) {
+    splash.updateMessage(
+      'There is a delay in connecting, please refresh your browser and try again...'
+    );
+    return;
+  }
 
   // Initiate Dialogs
   const sqlDialog = new DialogSql('Sql');
+
+  const cmds = await dataManager.getCmds();
   const updateDialog = new DialogUpdate('Update Commands', {
     dataManager: dataManager,
     cmds: cmds,
   });
+
+  // Make the grid resizable
+  const resizable = new GridResizable();
+  document
+    .querySelectorAll('.divider-vertical')
+    .forEach((div, i) => resizable.makeVerticalDivider(div, i * 2 + 1));
+  document
+    .querySelectorAll('.divider-horizontal')
+    .forEach((div, i) => resizable.makeHorizontalDivider(div, i * 2 + 1));
 
   // Add BitemporalChart to display department data
   const deptChartContainer = document.getElementById('panelDeptPlot');

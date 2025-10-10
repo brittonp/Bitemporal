@@ -10,6 +10,10 @@ export class DataManager extends EventTarget {
     this.config = config;
   }
 
+  async pingDatabase() {
+    await this.fetchData(`/Bitemporal/PingDatabase`);
+  }
+
   async loadDepartments() {
     const data = await this.fetchData(
       `/Bitemporal/GetDepartmentBitemporalData?deptId=${this.config.deptId}`
