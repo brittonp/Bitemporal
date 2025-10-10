@@ -17,6 +17,55 @@ The app provides:
 
 ---
 
+## 🧠 Bitemporal Concepts
+
+The application demonstrates two key time dimensions:
+
+* **Valid Time** → When a fact is true in the *real world*
+* **Transaction Time** → When the fact is recorded or modified in the *database*
+
+This dual-timeline approach enables:
+
+* Historical and system-level auditing
+* Retroactive and correctional updates
+* Querying effective states at any given time
+
+---
+
+## 💡 Application Features
+
+### 1. Department and Employee Charts
+
+* Department 10 and Employee 100 visualized over valid and transaction time
+* Hovering highlights effective records in the data tables
+
+### 2. Underlying Data Tables
+
+* List all bitemporal records for each entity
+* Real-time highlighting of effective rows
+
+### 3. Combined Query on Click
+
+* Displays results of Department–Employee join at the clicked valid/transaction intersection
+
+### 4. Predefined Updates
+
+* Simulate corrections or retroactive changes
+* Observe changes reflected across charts and tables immediately
+
+---
+
+## 🌐 Live Demo on Azure
+
+The Bitemporal App is also deployed and running on **Azure Static Web Apps**:
+
+👉 [Live App URL](https://ambitious-sky-0205e3803.2.azurestaticapps.net/)
+
+⚠️ **Note**: This instance runs under a **free Azure subscription**.  
+As a result, there may be a short **initial delay** when first loading the app while the underlying **API** and **database** spin up. After the first request, performance should be smooth.
+
+---
+
 ## 🧩 Architecture
 
 | Layer          | Technology                                     | Description                                           |
@@ -65,44 +114,6 @@ flowchart TD
     CI_CD -->|Continuous Deployment| Backend
     CI_CD -->|Continuous Deployment| Frontend
 ```
-
----
-
-## 🧠 Bitemporal Concepts
-
-The application demonstrates two key time dimensions:
-
-* **Valid Time** → When a fact is true in the *real world*
-* **Transaction Time** → When the fact is recorded or modified in the *database*
-
-This dual-timeline approach enables:
-
-* Historical and system-level auditing
-* Retroactive and correctional updates
-* Querying effective states at any given time
-
----
-
-## 💡 Application Features
-
-### 1. Department and Employee Charts
-
-* Department 10 and Employee 100 visualized over valid and transaction time
-* Hovering highlights effective records in the data tables
-
-### 2. Underlying Data Tables
-
-* List all bitemporal records for each entity
-* Real-time highlighting of effective rows
-
-### 3. Combined Query on Click
-
-* Displays results of Department–Employee join at the clicked valid/transaction intersection
-
-### 4. Predefined Updates
-
-* Simulate corrections or retroactive changes
-* Observe changes reflected across charts and tables immediately
 
 ---
 
