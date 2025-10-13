@@ -1,0 +1,17 @@
+/* GridResizeable.css */
+.divider {
+  background: var(--border-colour);
+
+}
+
+.resize-horizontal {
+  cursor: row-resize;
+}
+
+.resize-vertical {
+  cursor: col-resize;
+}
+
+.resize:hover {
+  background: var(--border-colour-hover);
+}

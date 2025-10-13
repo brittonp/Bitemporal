@@ -1,13 +1,14 @@
 ﻿// main.mjs
 import './style.css';
-import { Splash } from './Splash.mjs';
-import { GridResizable } from './GridResizeable.mjs';
-import { DataManager } from './DataManager.mjs';
-import { Config } from './Config.mjs';
-import { JsonTable } from './JsonTable.mjs';
-import { Chart } from './Chart.mjs';
-import { DialogSql } from './DialogSql.mjs';
-import { DialogUpdate } from './DialogUpdate.mjs';
+import { Splash } from './components/Splash.mjs';
+import { GridResizable } from './components/GridResizeable.mjs';
+import { DataManager } from './components/DataManager.mjs';
+import { Config } from './components/Config.mjs';
+import { Table } from './components/Table.mjs';
+import { Chart } from './components/Chart.mjs';
+import { DialogSql } from './components/DialogSql.mjs';
+import { DialogUpdate } from './components/DialogUpdate.mjs';
+import { DropDownMenu } from './components/DropDownMenu.mjs';
 
 //Wait for the page to load before initializing the app
 window.addEventListener('load', async (event) => {
@@ -33,55 +34,109 @@ window.addEventListener('load', async (event) => {
     cmds: cmds,
   });
 
-  // Make the grid resizable
-  const resizable = new GridResizable();
-  document
-    .querySelectorAll('.divider-vertical')
-    .forEach((div, i) => resizable.makeVerticalDivider(div, i * 2 + 1));
-  document
-    .querySelectorAll('.divider-horizontal')
-    .forEach((div, i) => resizable.makeHorizontalDivider(div, i * 2 + 1));
+  // Make the grids resizable
+  const resizable = new GridResizable(document);
 
-  // Add BitemporalChart to display department data
-  const deptChartContainer = document.getElementById('panelDeptPlot');
-  const deptChart = new Chart(deptChartContainer, dataManager, {
+  // manage tabs
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      // Remove active states
+      tabButtons.forEach((b) => b.classList.remove('active'));
+      tabContents.forEach((c) => c.classList.remove('active'));
+
+      // Add active state to clicked button + target content
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Add Chart to display department data
+  const deptChartContainer = document.getElementById('deptChartContainer');
+  new Chart(deptChartContainer, dataManager, {
     dataset: 'Department',
     title: `Department ${configData.deptId}`,
   });
 
-  // Add BitemporalChart to display employee data
-  const empChartContainer = document.getElementById('panelEmpPlot');
-  const empChart = new Chart(empChartContainer, dataManager, {
+  // Add Chart to display employee data
+  const empChartContainer = document.getElementById('empChartContainer');
+  new Chart(empChartContainer, dataManager, {
     dataset: 'Employee',
     title: `Employee ${configData.empId}`,
   });
 
-  // Add JsonTable to display department data
-  const deptTableContainer = document.getElementById('panel2');
-  const deptJsonTable = new JsonTable(deptTableContainer, dataManager, {
+  // Add Table to display department data
+  const deptTableContainer = document.getElementById('deptTableContainer');
+  new Table(deptTableContainer, dataManager, {
     dataset: 'Department',
     title: `Department ${configData.deptId}`,
     sqlDialog: sqlDialog,
   });
 
-  // Add JsonTable to display employee data
-  const empTableContainer = document.getElementById('panel3');
-  const empJsonTable = new JsonTable(empTableContainer, dataManager, {
+  // Add Table to display employee data
+  const empTableContainer = document.getElementById('empTableContainer');
+  new Table(empTableContainer, dataManager, {
     dataset: 'Employee',
     title: `Employee ${configData.empId}`,
     sqlDialog: sqlDialog,
   });
 
-  // Add JsonTable to display employee data
-  const queryTableContainer = document.getElementById('panel4');
-  const queryJsonTable = new JsonTable(queryTableContainer, dataManager, {
+  // Add Table to display query data
+  const queryTableContainer = document.getElementById('queryTableContainer');
+  new Table(queryTableContainer, dataManager, {
     dataset: 'Query',
     title: 'Query Data',
     sqlDialog: sqlDialog,
     ignoreHover: true,
+    initialMessage:
+      'Click on a chart to view the data effective for that point in time.',
   });
 
-  // Initial data load
+  // Create a dropdown menu for the update commands
+  const headerCenter = document.querySelector('.header .centre-section');
+  new DropDownMenu(headerCenter, {
+    label: 'Modify data',
+    loadItems: async (self) => {
+      Object.entries(cmds.UpdateCmds).forEach(([key, value]) => {
+        const menuItem = document.createElement('li');
+        const menuLink = document.createElement('a');
+        menuLink.textContent = value.title;
+        menuLink.href = '#';
+        menuLink.title = value.description;
+        menuLink.addEventListener('click', async (e) => {
+          e.preventDefault();
+          self.dropdownMenu.classList.remove('show');
+          updateDialog.open(key);
+        });
+        menuItem.appendChild(menuLink);
+        self.dropdownMenu.appendChild(menuItem);
+      });
+    },
+  });
+
+  // Add button to refresh screen
+  const refreshButton = document.createElement('div');
+  refreshButton.textContent = '🔄';
+  refreshButton.className = 'unstyled-link';
+  refreshButton.title = 'Requery the data from the database';
+  refreshButton.addEventListener('click', async () => {
+    await dataManager.loadData();
+  });
+  document.querySelector('.header .right-section').prepend(refreshButton);
+
+  //Add button to reset data
+  const resetButton = document.createElement('div');
+  resetButton.textContent = '♻️';
+  resetButton.className = 'unstyled-link';
+  resetButton.title = 'Reset the data in the database';
+  resetButton.addEventListener('click', async () => {
+    await dataManager.resetData();
+  });
+  document.querySelector('.header .right-section').prepend(resetButton);
+
+  // Initial data load, then hide splash
   try {
     await dataManager.loadData();
 
@@ -96,32 +151,4 @@ window.addEventListener('load', async (event) => {
     );
     return;
   }
-
-  // Add button to reset data
-  const resetButton = document.getElementById('resetButton');
-  resetButton.addEventListener('click', async () => {
-    await dataManager.resetData();
-  });
-
-  // Dynamically create buttons for each update command
-  const buttonContainer = document.createElement('div');
-  buttonContainer.id = 'updateCmdButtons';
-  Object.entries(cmds.UpdateCmds).forEach(([key, value]) => {
-    const button = document.createElement('button');
-    button.textContent = key;
-    button.id = `Update${key}Button`;
-    button.title = value.description;
-    buttonContainer.appendChild(button);
-    button.addEventListener('click', async () => {
-      //await dataManager.updateData(key);
-      updateDialog.open(key);
-    });
-  });
-  document.querySelector('.centre-buttons').appendChild(buttonContainer);
-
-  // Add button to refresh data
-  const refreshButton = document.getElementById('refreshButton');
-  refreshButton.addEventListener('click', async () => {
-    await dataManager.loadData();
-  });
 });

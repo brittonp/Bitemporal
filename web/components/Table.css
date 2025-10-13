@@ -1,0 +1,26 @@
+/* Table styles */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: .8rem;
+}
+
+table thead th{
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  padding: 4px 10px 4px;
+}
+
+table td {
+  border: 1px solid #ccc;
+  padding: 4px 10px 4px;
+}
+
+table tbody tr:nth-child(odd) {
+  background-color: #dadada;
+}
+
+table tbody tr.highlight {
+  background-color: yellow;
+}

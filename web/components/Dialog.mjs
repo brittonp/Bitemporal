@@ -1,3 +1,6 @@
+// dialog.mjs
+import './Dialog.css';
+
 export class Dialog {
   constructor(title, opts) {
     this.el = document.createElement('div');
@@ -15,7 +18,7 @@ export class Dialog {
 
     // Add a copy button to the header
     const copyEl = document.createElement('button');
-    copyEl.textContent = 'Copy';
+    copyEl.textContent = '📋Copy SQL';
     copyEl.addEventListener('click', () => this.#copySql());
     this.dialogHeader.append(copyEl);
 

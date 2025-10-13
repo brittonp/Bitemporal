@@ -8,6 +8,10 @@ export class DialogUpdate extends Dialog {
     this.dataManager = opts.dataManager;
 
     // Define the content area
+    this.contentTitle = document.createElement('div');
+    this.contentTitle.style.fontWeight = 'bold';
+    this.contentTitle.style.fontSize = '1.2em';
+    this.dialogContent.append(this.contentTitle);
     this.contentDescription = document.createElement('div');
     this.dialogContent.append(this.contentDescription);
     this.contentSql = document.createElement('pre');
@@ -18,7 +22,7 @@ export class DialogUpdate extends Dialog {
 
     // Add a execute button to the footer
     const executeBtn = document.createElement('button');
-    executeBtn.textContent = 'Execute';
+    executeBtn.textContent = '⚡Execute';
     executeBtn.addEventListener('click', async () => {
       await this.dataManager.updateData(this.cmd);
       this.close();
@@ -29,6 +33,7 @@ export class DialogUpdate extends Dialog {
   open(cmd) {
     this.cmd = cmd;
     const cmdObj = this.cmds.UpdateCmds[cmd];
+    this.contentTitle.textContent = cmdObj.title || 'No title';
     this.contentDescription.textContent =
       cmdObj.description || 'No description available';
     this.contentSql.textContent = cmdObj.sql || 'No command found';

@@ -1,4 +1,6 @@
 // splash.mjs
+import './Splash.css';
+
 export class Splash {
   constructor(config) {
     this.config = config;

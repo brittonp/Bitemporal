@@ -1,8 +1,12 @@
 // Chart.mjs
 export class Chart {
-  constructor(canvas, dataManager, opts = {}) {
-    this.canvas = canvas;
-    this.ctx = canvas.getContext('2d');
+  constructor(container, dataManager, opts = {}) {
+    this.container = container;
+    this.canvas = document.createElement('canvas');
+    this.container.appendChild(this.canvas);
+
+    //this.canvas = canvas;
+    this.ctx = this.canvas.getContext('2d');
     this.dataManager = dataManager;
     this.datasetKey = opts.dataset;
     this.title = opts.title || 'Bitemporal Chart';
@@ -88,11 +92,11 @@ export class Chart {
   }
 
   #resizeCanvas() {
-    const style = getComputedStyle(this.canvas.parentElement);
+    const style = getComputedStyle(this.container);
     const padX = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
     const padY = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
 
-    const rect = this.canvas.parentElement.getBoundingClientRect();
+    const rect = this.container.getBoundingClientRect();
     this.width = rect.width - padX;
     this.height = rect.height - padY;
 
