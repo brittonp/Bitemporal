@@ -33,7 +33,7 @@ jobs:
           dotnet-version: '9.x'
 
       - name: Build API project only
-        run: dotnet build ./api/Bitemporal-api.csproj --configuration Release
+        run: dotnet build ./api/api.csproj --configuration Release
 
       - name: Publish API project
         run: dotnet publish ./api/api.csproj -c Release -r win-x86 --self-contained false -o publish /p:DeleteExistingFiles=true
