@@ -36,7 +36,7 @@ jobs:
         run: dotnet build ./api/Bitemporal-api.csproj --configuration Release
 
       - name: Publish API project
-        run: dotnet publish ./api/Bitemporal-api.csproj -c Release -r win-x86 --self-contained false -o publish /p:DeleteExistingFiles=true
+        run: dotnet publish ./api/api.csproj -c Release -r win-x86 --self-contained false -o publish /p:DeleteExistingFiles=true
 
       - name: Upload artifact for deployment
         uses: actions/upload-artifact@v4
