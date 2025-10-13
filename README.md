@@ -144,6 +144,8 @@ bitemporal-app/
 
 ### 1. Clone the repository
 
+From a terminal, run:
+
 ```powershell
 git clone https://github.com/brittonp/Bitemporal
 cd bitemporal
@@ -157,6 +159,7 @@ This app connects to a locally hosted SqlServer database.
 cd sql
 sqlcmd -S localhost -E -Q "CREATE DATABASE BitemporalDB"
 sqlcmd -S localhost -E -i create.sql
+cd ..
 ```
 
 ### 3. Run the api
@@ -167,6 +170,8 @@ dotnet run --project api.csproj --urls "https://localhost:5001"
 ```
 
 ### 4. Run the frontend
+
+You will need to open a new terminal window for this step.
 
 ```powershell
 cd web
