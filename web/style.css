@@ -281,3 +281,15 @@ table tbody tr.highlight {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
+
+
+.unstyled-link {
+  color: inherit;        /* Makes it take the surrounding text color */
+  text-decoration: none; /* Removes the underline */
+  cursor: pointer;       /* Keeps the pointer cursor on hover */
+}
+
+.unstyled-link:hover {
+  /* Optional: subtle hover effect */
+  opacity: 0.8;
+}

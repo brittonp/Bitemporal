@@ -82,12 +82,7 @@ window.addEventListener('load', async (event) => {
   });
 
   // Initial data load
-  //await dataManager.loadData();
-
   try {
-    // ping database to ensure connection is working
-    //await dataManager.pingDatabase();
-    // // Initial data load
     await dataManager.loadData();
 
     // hide splash when ready
