@@ -163,7 +163,7 @@ sqlcmd -S localhost -E -i create.sql
 
 ```powershell
 cd api
-dotnet run --project Bitemporal-api.csproj --urls "https://localhost:5001"
+dotnet run --project api.csproj --urls "https://localhost:5001"
 ```
 
 ### 4. Run the frontend
