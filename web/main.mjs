@@ -24,21 +24,6 @@ window.addEventListener('load', async (event) => {
   // Intialise DataManager
   const dataManager = new DataManager(configData);
 
-  try {
-    // ping database to ensure connection is working
-    await dataManager.pingDatabase();
-    // hide splash when ready
-    splash.hideSplash();
-
-    // bit ugly but need to ensure splash is removed before showing app
-    document.querySelector('app').classList.remove('hidden');
-  } catch (err) {
-    splash.updateMessage(
-      'There is a delay in connecting, please refresh your browser and try again...'
-    );
-    return;
-  }
-
   // Initiate Dialogs
   const sqlDialog = new DialogSql('Sql');
 
@@ -97,7 +82,25 @@ window.addEventListener('load', async (event) => {
   });
 
   // Initial data load
-  await dataManager.loadData();
+  //await dataManager.loadData();
+
+  try {
+    // ping database to ensure connection is working
+    //await dataManager.pingDatabase();
+    // // Initial data load
+    await dataManager.loadData();
+
+    // hide splash when ready
+    splash.hideSplash();
+
+    // bit ugly but need to ensure splash is removed before showing app
+    document.querySelector('app').classList.remove('hidden');
+  } catch (err) {
+    splash.updateMessage(
+      'There is a delay in connecting, please refresh your browser and try again...'
+    );
+    return;
+  }
 
   // Add button to reset data
   const resetButton = document.getElementById('resetButton');
