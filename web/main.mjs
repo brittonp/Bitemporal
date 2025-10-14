@@ -25,7 +25,7 @@ window.addEventListener('load', async (event) => {
   // Intialise DataManager
   const dataManager = new DataManager(configData);
 
-  // Initiate Dialogs
+  // Create Dialogs
   const sqlDialog = new DialogSql('Sql');
 
   const cmds = await dataManager.getCmds();
@@ -35,7 +35,7 @@ window.addEventListener('load', async (event) => {
   });
 
   // Make the grids resizable
-  const resizable = new GridResizable(document);
+  const resizable = new GridResizable();
 
   // manage tabs
   const tabButtons = document.querySelectorAll('.tab-btn');

@@ -42,26 +42,21 @@
       </header>
 
       <main class="body-panel">
-        <div class="grid-vertical">
+        <div class="grid resizable vertical">
           <div class="panel">
-            <div class="grid-horizontal">
+            <div class="grid resizable horizontal">
               <div id="deptChartContainer" class="panel"></div>
-              <div class="divider resize-vertical"></div>
               <div id="empChartContainer" class="panel"></div>
             </div>
           </div>
 
-          <div class="divider resize-horizontal"></div>
-
           <!-- Bottom section with tabs -->
           <div class="tab panel">
-
             <!-- Tab buttons -->
             <div class="tab-buttons">
               <button class="tab-btn active" data-tab="tab1">Table Data</button>
               <button class="tab-btn" data-tab="tab2">Query Data</button>
             </div>
-
             <!-- Tab contents -->
             <div class="tab-content active" id="tab1">
               <div id="deptTableContainer" class="panel"></div>

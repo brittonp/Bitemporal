@@ -112,21 +112,6 @@ button:hover {
   justify-content: center;
 }
 
-.grid-vertical {
-  display: grid;
-  grid-template-rows: 1fr 2px 1fr;
-  /* Top, divider, middle, divider, bottom */
-  height: 100%;
-  width: 100%;
-}
-
-.grid-horizontal {
-  display: grid;
-  grid-template-columns: 1fr 2px 1fr;
-  /* Left, divider, right */
-  height: 100%;
-  width: 100%;
-}
 
 .panel {
   background: #f0f0f0;

@@ -1,4 +1,10 @@
 /* GridResizeable.css */
+.grid.resizable {
+  display: grid;
+  height: 100%;
+  width: 100%;
+}
+
 .divider {
   background: var(--border-colour);
 
