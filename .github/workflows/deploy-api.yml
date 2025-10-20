@@ -15,7 +15,7 @@ on:
       - master
     paths:
       - 'api/**'
-      - '.github/workflows/deploy-api.yaml'
+      - '.github/workflows/deploy-api.yml'
   workflow_dispatch:
 
 jobs:
